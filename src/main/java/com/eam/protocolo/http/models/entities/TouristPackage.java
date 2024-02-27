@@ -2,23 +2,21 @@ package com.eam.protocolo.http.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.ToString;
-import org.hibernate.annotations.Proxy;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name = "touristPackage")
+@Table(name = "tourist_package")
 @ToString
-@SQLDelete(sql = "UPDATE touristPackage SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
+@SQLDelete(sql = "UPDATE tourist_package SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "deleted_at is null")
 @Proxy(lazy = false)
 public class TouristPackage implements Serializable {
@@ -43,6 +41,22 @@ public class TouristPackage implements Serializable {
 
     @Column(name = "price")
     private Double price;
+
+    @CreationTimestamp
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "created_at", updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+
+    @Column(name = "deleted_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date deletedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tourist_packages_destinations", joinColumns = @JoinColumn(name = "tourist_package_id"), inverseJoinColumns = @JoinColumn(name = "reservation_id"))
