@@ -1,12 +1,17 @@
 package com.eam.protocolo.http.services.impl;
 
+import com.eam.protocolo.http.models.dtos.TouristPackageDTO;
 import com.eam.protocolo.http.models.entities.TouristPackage;
 import com.eam.protocolo.http.repositories.TouristPackageRepository;
 import com.eam.protocolo.http.services.TouristPackageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
+@Service
 public class TouristPackageServiceImpl implements TouristPackageService {
 
     @Autowired
@@ -29,5 +34,16 @@ public class TouristPackageServiceImpl implements TouristPackageService {
     @Override
     public void delete(Integer id) {
         touristPackageRepository.deleteById(id);
+    }
+
+    @Override
+    public TouristPackage factory(TouristPackageDTO touristPackageDTO) throws ParseException {
+        TouristPackage touristPackage = new TouristPackage();
+        touristPackage.setPrice(touristPackageDTO.getPrice());
+        touristPackage.setName(touristPackageDTO.getName());
+        touristPackage.setTime(touristPackageDTO.getTime());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        touristPackage.setDate(dateFormat.parse(touristPackageDTO.getDate()));
+        return save(touristPackage);
     }
 }

@@ -36,7 +36,8 @@ public class Reservation implements Serializable {
     @JoinColumn(name = "person_id")
     private Person person;
 
-    @OneToOne(mappedBy = "tourist_package", fetch = FetchType.EAGER)
+    @OneToOne(optional = true)
+    @JoinColumn(name = "tourist_package", referencedColumnName = "id")
     private TouristPackage touristPackage;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")

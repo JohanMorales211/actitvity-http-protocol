@@ -1,5 +1,6 @@
 package com.eam.protocolo.http.services;
 
+import com.eam.protocolo.http.models.dtos.PersonDTO;
 import com.eam.protocolo.http.models.entities.Person;
 
 import java.util.List;
@@ -10,5 +11,5 @@ public interface PersonService {
     public Person save(Person person);
     public Person findById(Integer id);
     public void delete(Integer id);
-    
+    public Person factory(PersonDTO personDTO);
 }
