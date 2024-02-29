@@ -35,6 +35,12 @@ public class PersonController {
         return ResponseEntity.ok(lstPersons);
     }
 
+    @GetMapping("/get-person-by-id/{idPerson}")
+    public ResponseEntity getPersons(@PathVariable Integer idPerson) {
+        Person person = personService.findById(idPerson);
+        return ResponseEntity.ok(person);
+    }
+
     @PostMapping("/save-person")
     public ResponseEntity save(@ModelAttribute PersonDTO personDTO) {
         System.err.println("xd");
